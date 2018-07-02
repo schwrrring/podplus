@@ -337,9 +337,9 @@ button.controls__more {
 
 .header__header h1 {
     margin: 0;
-    font-size: 30px;
+    font-size: 22px;
     position: absolute;
-	font-family: 'NDRSansCondRegular', sans-serif;
+    font-family: 'NDRSansCondRegular', sans-serif;
 }
 
 .header__strange-bird-title {
