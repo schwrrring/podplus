@@ -62,7 +62,7 @@ module.exports = {
     devtool: "source-map",
     plugins: [
         new HTMLWebpackPlugin({
-            title: "Strange Bird",
+            title: "Podcast Plus",
             filename: "index.html",
             excludeChunks: ["worker"],
             template: "src/index.ejs"

@@ -46,7 +46,7 @@ export function StartButton(props: StartButtonProps) {
                         props.onPlay(false);
                     }}
                 >
-                    Play – Ohne Push-Nachrichten
+                    Play – Ohne ShowPush-Nachrichten
                 </button>
             </div>
         );
