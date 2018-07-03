@@ -22,7 +22,7 @@ var config: FirebaseConfig  = {
     messagingSenderId: "898237232429"
 
 };
-firebase.initializeApp(config);1
+firebase.initializeApp(config);
 
 export const db = firebase.firestore();
 
