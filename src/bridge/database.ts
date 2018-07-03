@@ -24,6 +24,7 @@ var config: FirebaseConfig  = {
 };
 firebase.initializeApp(config);
 
+
 export const db = firebase.firestore();
 
 export function createCounter ( ref: firebase.firestore.DocumentReference, num_shards: number) {
