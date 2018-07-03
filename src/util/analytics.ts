@@ -45,3 +45,4 @@ export function sendPageView(url: string, title?: string) {
 
     Analytics(toSend);
 }
+

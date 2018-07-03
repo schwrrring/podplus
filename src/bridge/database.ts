@@ -13,12 +13,14 @@ interface FirebaseConfig{
 }
 
 var config: FirebaseConfig  = {
-    apiKey: "AIzaSyCSLm03JMbMC1aAajxckMfubHXNIk-gGXc",
-    authDomain: "testen-d968c.firebaseapp.com",
-    databaseURL: "https://testen-d968c.firebaseio.com",
-    projectId: "testen-d968c",
-    storageBucket: "testen-d968c.appspot.com",
-    messagingSenderId: "444396349659"
+
+    apiKey: "AIzaSyAKzcd6jibmJTJqZHIbAhPgjRv_m0f4cws",
+    authDomain: "podcastplusv1.firebaseapp.com",
+    databaseURL: "https://podcastplusv1.firebaseio.com",
+    projectId: "podcastplusv1",
+    storageBucket: "podcastplusv1.appspot.com",
+    messagingSenderId: "898237232429"
+
 };
 firebase.initializeApp(config);1
 
