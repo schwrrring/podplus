@@ -82,7 +82,7 @@ function renderImage(bindTo: ChatBubble) {
                 return {
                     html: `<video src="${image.url}" class="${
                         styles.expandedVideo
-                    }" playsinline autoplay muted/>`,
+                    }" playsinline autoplay muted controls/>`,
                     title: image.caption || ""
                 };
             }
@@ -109,6 +109,7 @@ function renderImage(bindTo: ChatBubble) {
                 autoPlay={true}
                 muted={true}
                 playsInline={true}
+                controls={true}
             />
         );
     } else {
