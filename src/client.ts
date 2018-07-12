@@ -10,7 +10,6 @@ import { sendPageView } from "./util/analytics";
 
 import { main } from "./ui/frame/frame.css";
 
-
 declare var navigator: Navigator;
 
 let container = document.createElement("div");
