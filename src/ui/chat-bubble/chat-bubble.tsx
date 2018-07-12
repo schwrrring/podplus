@@ -82,7 +82,7 @@ function renderImage(bindTo: ChatBubble) {
                 return {
                     html: `<video src="${image.url}" class="${
                         styles.expandedVideo
-                    }" playsinline autoplay muted controls/>`,
+                    }" playsinline autoplay controls/>`,
                     title: image.caption || ""
                 };
             }
@@ -106,8 +106,8 @@ function renderImage(bindTo: ChatBubble) {
             <video
                 src={bindTo.props.images[0].url}
                 style={imageStyles}
-                autoPlay={true}
-                muted={true}
+                autoPlay={false}
+                muted={false}
                 playsInline={true}
                 controls={true}
             />
