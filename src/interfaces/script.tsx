@@ -116,6 +116,17 @@ function mapScriptEntry(
         elements.unshift(<ChatBubble time={response.time} key={`item_${index}_images`} images={images} />);
     }
 
+    if (response.poll) {
+
+        let secondItemProperties: ChatBubbleProperties = {
+            time: response.time,
+           poll: response.poll,
+        };
+
+        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_poll`} />);
+
+    }
+
     if (response.link) {
         let url = new URL(response.link.url, baseURL.href);
         let imageURL: string | undefined = undefined;

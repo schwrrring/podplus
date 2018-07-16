@@ -8,6 +8,29 @@ import { showOrHideContactBox } from "../contact-box/contact-box";
 import { showOrHideSideMenu } from "../side-menu/side-menu";
 import { sendEvent } from "../../util/analytics";
 
+// tryouts
+import { httpGet } from "../../bridge/httpRequest";
+import {db, createCounter, incrementCounter, getCount} from "../../bridge/database";
+
+db
+    .doc('polls/test')
+    .get()
+    .then(doc => console.log(doc.data(), "hier kommt der shit"))
+
+
+let ref = db.collection('counters').doc("umfrage1");
+// TODO: beachten, ueberlegen, dass das hier dafuer verantwortlich ist eine neue
+// Counter anzulegen, hier muss irgendwie ein conditional rein, dass guckt, ob d
+// das Datenfeld schon ausgefuellt ist.
+//
+
+// let ergebnis = createCounter(ref, 10).then(() => {
+//     return incrementCounter(db, ref, 10);
+// }).then(() => {
+//     return getCount(ref);
+// });
+
+// ergebnis.then(function(value){console.log(value, "ergebnis")});
 
 
 export enum BubbleType {
@@ -30,6 +53,11 @@ export interface ChatBubbleLink {
     specialAction?: string;
 }
 
+export interface ChatBubblePoll {
+    question: string;
+    choices: string[];
+}
+
 export interface ChatBubbleProperties {
     text?: string;
     time: number;
@@ -38,6 +66,7 @@ export interface ChatBubbleProperties {
     chapterIndicator?: Chapter;
     silent?: boolean;
     notificationOnlyText?: string;
+    poll?: ChatBubblePoll;
 }
 
 interface ChatBubbleState {
@@ -145,6 +174,36 @@ function renderText(bindTo: ChatBubble) {
     );
 }
 
+function renderPoll(bindTo: ChatBubble){
+    if (!bindTo.props.poll) {
+        return null;
+    }
+
+    return (
+        <div key="text" className={styles.bubbleTextPadding}>
+            <div className={styles.bubbleText} ref={el => (bindTo.textElement = el)}>
+                <div>{bindTo.props.poll.question}</div>
+                <button onClick={()=>{
+                    console.log("sdf")
+
+                    incrementCounter(db, ref, 10);
+                    let test = getCount(ref);
+                    test.then(function(value){console.log(value, 'value')})
+                    db.collection('suggestions').add({name2: "1"})
+                }}>
+                    {bindTo.props.poll.choices[0]}
+                    </button>
+                <button onClick={()=>{ console.log("ard")
+                    db.collection('suggestions').add({name: "2"})
+                }}>
+                    {bindTo.props.poll.choices[1]}
+                </button>
+            </div>
+        </div>
+    );
+
+}
+
 function renderLink(props: ChatBubbleProperties) {
     if (!props.link) {
         return null;
@@ -240,7 +299,8 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             renderChapterIndicator(this.props.chapterIndicator),
             renderImage(this),
             renderText(this),
-            renderLink(this.props)
+            renderLink(this.props),
+            renderPoll(this),
         ];
 
         if (elements.some(el => el !== null) === false) {
