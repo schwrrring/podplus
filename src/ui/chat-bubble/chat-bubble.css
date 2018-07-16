@@ -63,6 +63,26 @@
     margin: 10px;
 }
 
+.bubble-poll{
+
+    font-size: 16px;
+    background-color: #5ebfba;
+    /*text-align: center;*/
+}
+.bubble-poll-padding {
+    padding: 10px 15px;
+    background-color: #5ebfba;
+}
+
+.bubble-poll-buttons{
+    font-size: 20px;
+}
+
+.bubble-poll-buttons-container{
+    text-align: center;
+}
+
+
 .bubble-link-title {
     font-size: 13px;
     font-weight: bold;

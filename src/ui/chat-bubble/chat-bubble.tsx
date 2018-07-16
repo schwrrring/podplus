@@ -1,15 +1,15 @@
 import * as styles from "./chat-bubble.css";
 import * as React from "react";
-import { Component } from "react";
-import { getPhotoSwipeContainer, PhotoSwipe } from "../photoswipe/photoswipe";
-import { runServiceWorkerCommand } from "service-worker-command-bridge";
-import { Chapter, makeRelative } from "../../interfaces/script";
-import { showOrHideContactBox } from "../contact-box/contact-box";
-import { showOrHideSideMenu } from "../side-menu/side-menu";
-import { sendEvent } from "../../util/analytics";
+import {Component} from "react";
+import {getPhotoSwipeContainer, PhotoSwipe} from "../photoswipe/photoswipe";
+import {runServiceWorkerCommand} from "service-worker-command-bridge";
+import {Chapter, makeRelative} from "../../interfaces/script";
+import {showOrHideContactBox} from "../contact-box/contact-box";
+import {showOrHideSideMenu} from "../side-menu/side-menu";
+import {sendEvent} from "../../util/analytics";
 
 // tryouts
-import { httpGet } from "../../bridge/httpRequest";
+import {httpGet} from "../../bridge/httpRequest";
 import {db, createCounter, incrementCounter, getCount} from "../../bridge/database";
 
 db
@@ -85,7 +85,7 @@ function renderImage(bindTo: ChatBubble) {
         return null;
     }
 
-    let { width, height } = bindTo.props.images[0];
+    let {width, height} = bindTo.props.images[0];
 
     let containerStyles: React.CSSProperties = {
         paddingTop: height / width * 100 + "%",
@@ -111,7 +111,7 @@ function renderImage(bindTo: ChatBubble) {
                 return {
                     html: `<video src="${image.url}" class="${
                         styles.expandedVideo
-                    }" playsinline autoplay controls/>`,
+                        }" playsinline autoplay controls/>`,
                     title: image.caption || ""
                 };
             }
@@ -126,7 +126,7 @@ function renderImage(bindTo: ChatBubble) {
             };
         });
 
-        gallery = <PhotoSwipe items={items} onClose={() => setExpandedState(bindTo, false)} />;
+        gallery = <PhotoSwipe items={items} onClose={() => setExpandedState(bindTo, false)}/>;
     }
 
     let img: JSX.Element;
@@ -142,11 +142,11 @@ function renderImage(bindTo: ChatBubble) {
             />
         );
     } else {
-        img = <img src={bindTo.props.images[0].url} style={imageStyles} />;
+        img = <img src={bindTo.props.images[0].url} style={imageStyles}/>;
     }
 
     return (
-        <div key="image" style={{ maxHeight: "60vh" }} className={styles.bubbleImageContainer}>
+        <div key="image" style={{maxHeight: "60vh"}} className={styles.bubbleImageContainer}>
             <div
                 style={containerStyles}
                 onClick={() => {
@@ -174,30 +174,35 @@ function renderText(bindTo: ChatBubble) {
     );
 }
 
-function renderPoll(bindTo: ChatBubble){
+function renderPoll(bindTo: ChatBubble) {
     if (!bindTo.props.poll) {
         return null;
     }
 
     return (
-        <div key="text" className={styles.bubbleTextPadding}>
-            <div className={styles.bubbleText} ref={el => (bindTo.textElement = el)}>
+        <div key="text" className={styles.bubblePollPadding}>
+            <div className={styles.bubblePoll} ref={el => (bindTo.textElement = el)}>
                 <div>{bindTo.props.poll.question}</div>
-                <button onClick={()=>{
-                    console.log("sdf")
+                <div className={styles.bubblePollButtonsContainer}>
+                    <button className={styles.bubblePollButtons} onClick={() => {
+                        console.log("sdf")
 
-                    incrementCounter(db, ref, 10);
-                    let test = getCount(ref);
-                    test.then(function(value){console.log(value, 'value')})
-                    db.collection('suggestions').add({name2: "1"})
-                }}>
-                    {bindTo.props.poll.choices[0]}
+                        incrementCounter(db, ref, 10);
+                        let test = getCount(ref);
+                        test.then(function (value) {
+                            console.log(value, 'value')
+                        })
+                        db.collection('suggestions').add({name2: "1"})
+                    }}>
+                        {bindTo.props.poll.choices[0]}
                     </button>
-                <button onClick={()=>{ console.log("ard")
-                    db.collection('suggestions').add({name: "2"})
-                }}>
-                    {bindTo.props.poll.choices[1]}
-                </button>
+                    <button className={styles.bubblePollButtons} onClick={() => {
+                        console.log("ard")
+                        db.collection('suggestions').add({name: "2"})
+                    }}>
+                        {bindTo.props.poll.choices[1]}
+                    </button>
+                </div>
             </div>
         </div>
     );
@@ -260,7 +265,7 @@ function renderChapterIndicator(chapter: Chapter | undefined) {
     return (
         <div key={"chapter-indicator"}>
             <div className={styles.chapterIndicatorText}>{chapter.name}</div>
-            <div className={styles.chapterIndicatorLine} />
+            <div className={styles.chapterIndicatorLine}/>
         </div>
     );
 }
@@ -380,9 +385,9 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
 
     setTouch(e: React.TouchEvent<HTMLDivElement>) {
         if (e.type === "touchstart") {
-            this.setState({ touched: true });
+            this.setState({touched: true});
         } else {
-            this.setState({ touched: false });
+            this.setState({touched: false});
         }
     }
 }
