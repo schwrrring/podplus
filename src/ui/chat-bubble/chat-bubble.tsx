@@ -12,23 +12,28 @@ import {sendEvent} from "../../util/analytics";
 import {httpGet} from "../../bridge/httpRequest";
 import {db, createCounter, incrementCounter, getCount} from "../../bridge/database";
 
-db
-    .doc('polls/test')
-    .get()
-    .then(doc => console.log(doc.data(), "hier kommt der shit"))
 
 
-let ref = db.collection('counters').doc("umfrage1");
+
+let ref = db.collection('counters').doc("test");
+const ergebnis = getCount(ref)
+ergebnis.then(function(value){ if (value == 0){createCounter(ref, 10)}})
+
+
+
+incrementCounter(db,ref,10)
+
+
+
+
 // TODO: beachten, ueberlegen, dass das hier dafuer verantwortlich ist eine neue
 // Counter anzulegen, hier muss irgendwie ein conditional rein, dass guckt, ob d
 // das Datenfeld schon ausgefuellt ist.
 
 
-let ergebnis = createCounter(ref, 10).then(() => {
-    return incrementCounter(db, ref, 10);
-}).then(() => {
-    return getCount(ref);
-});
+
+
+
 
 ergebnis.then(function(value){console.log(value, "ergebnis")});
 

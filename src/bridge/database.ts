@@ -38,12 +38,12 @@ export function createCounter ( ref: firebase.firestore.DocumentReference, num_s
     var batch = db.batch();
 
     // Initialize the counter document
-    batch.set(ref, { num_shards: num_shards });
+    batch.set(ref, { num_shards: num_shards }, {merge: true});
 
     // Initialize each shard with count=0
     for (let i = 0; i < num_shards; i++) {
         let shardRef = ref.collection('shards').doc(i.toString());
-        batch.set(shardRef, { count: 0 });
+        batch.set(shardRef, { count: 0 }, {merge: true} );
     }
 
     // Commit the write batch
