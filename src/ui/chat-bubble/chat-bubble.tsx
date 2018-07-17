@@ -72,7 +72,7 @@ export interface ChatBubbleProperties {
 interface ChatBubbleState {
     touched: boolean;
     expanded: boolean;
-    pollSent: boolean;
+    pollSent: number;
 }
 
 function setExpandedState(target: ChatBubble, toValue: boolean) {
@@ -189,11 +189,12 @@ function renderPoll(bindTo: ChatBubble) {
                     <div>{bindTo.props.poll.question}</div>
                     <div className={styles.bubblePollButtonsContainer}>
                         <button className={styles.bubblePollButtons} onClick={() => {
-                            console.log("sdf")
 
                             incrementCounter(db, ref, 10);
                             let test = getCount(ref);
+
                             test.then(function (value) {
+                                bindTo.setState({pollSent: value});
                                 console.log(value, 'value')
                             })
                             db.collection('suggestions').add({name2: "1"})
@@ -203,7 +204,6 @@ function renderPoll(bindTo: ChatBubble) {
                         <button className={styles.bubblePollButtons} onClick={() => {
                             console.log("ard")
                             db.collection('suggestions').add({name: "2"})
-                            bindTo.setState({pollSent: true});
                         }}>
                             {bindTo.props.poll.choices[1]}
                         </button>
@@ -216,7 +216,7 @@ function renderPoll(bindTo: ChatBubble) {
             <div key="text" className={styles.bubblePollPadding}>
 
                 <div className={styles.bubblePoll} ref={el => (bindTo.textElement = el)}>
-                    lalala
+                    {bindTo.state.pollSent}
                 </div>
             </div>
         )
@@ -295,7 +295,7 @@ function renderPoll(bindTo: ChatBubble) {
             this.state = {
                 touched: false,
                 expanded: false,
-                pollSent: false
+                pollSent: 0
             };
             this.maybeOpenPhotoSwipe = this.maybeOpenPhotoSwipe.bind(this);
             this.maybeClosePhotoSwipe = this.maybeClosePhotoSwipe.bind(this);
