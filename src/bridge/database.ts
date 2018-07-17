@@ -9,9 +9,10 @@ interface FirebaseConfig{
     databaseURL: string,
     projectId: string,
     storageBucket: string,
-    messagingSenderId: string
-}
+    messagingSenderId: string,
 
+
+}
 var config: FirebaseConfig  = {
 
     apiKey: "AIzaSyAKzcd6jibmJTJqZHIbAhPgjRv_m0f4cws",
@@ -19,10 +20,16 @@ var config: FirebaseConfig  = {
     databaseURL: "https://podcastplusv1.firebaseio.com",
     projectId: "podcastplusv1",
     storageBucket: "podcastplusv1.appspot.com",
-    messagingSenderId: "898237232429"
+    messagingSenderId: "898237232429",
+
 
 };
 firebase.initializeApp(config);
+const firestore = firebase.firestore();
+
+firestore.settings({timestampsInSnapshots: true})
+
+
 
 
 export const db = firebase.firestore();
