@@ -17,12 +17,21 @@ import {db, createCounter, incrementCounter, getCount} from "../../bridge/databa
 
 let ref = db.collection('counters').doc("test");
 const ergebnis = getCount(ref)
-ergebnis.then(function(value){ if (value == 0){createCounter(ref, 10)}})
-
-
+ergebnis.then(function(value){ console.log(value) ; if (value.exists){createCounter(ref, 10)}})
 
 incrementCounter(db,ref,10)
-
+// Query Results:
+// db.collection("counters").doc('test').collection('shards').where("count", ">=", 30)
+//     .get()
+//     .then(function(querySnapshot) {
+//         querySnapshot.forEach(function(doc) {
+//             // doc.data() is never undefined for query doc snapshots
+//             console.log("123", " => ", doc.data());
+//         });
+//     })
+//     .catch(function(error) {
+//         console.log("Error getting documents: ", error);
+//     });
 
 
 
@@ -202,13 +211,12 @@ function renderPoll(bindTo: ChatBubble) {
                                 bindTo.setState({pollSent: value});
                                 console.log(value, 'value')
                             })
-                            db.collection('suggestions').add({name2: "1"})
+
                         }}>
                             {bindTo.props.poll.choices[0]}
                         </button>
                         <button className={styles.bubblePollButtons} onClick={() => {
                             console.log("ard")
-                            db.collection('suggestions').add({name: "2"})
                         }}>
                             {bindTo.props.poll.choices[1]}
                         </button>

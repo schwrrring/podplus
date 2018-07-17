@@ -63,10 +63,12 @@ export function incrementCounter(db, ref, num_shards) {
         });
     });
 }
-
+var getOptions = {
+    source: 'server'
+};
 export function getCount(ref) {
     // Sum the count of each shard in the subcollection
-    return ref.collection('shards').get().then(snapshot => {
+    return ref.collection('shards').get(getOptions).then(snapshot => {
         let total_count = 0;
         snapshot.forEach(doc => {
             total_count += doc.data().count;
