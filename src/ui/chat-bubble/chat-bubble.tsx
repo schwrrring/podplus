@@ -22,15 +22,15 @@ let ref = db.collection('counters').doc("umfrage1");
 // TODO: beachten, ueberlegen, dass das hier dafuer verantwortlich ist eine neue
 // Counter anzulegen, hier muss irgendwie ein conditional rein, dass guckt, ob d
 // das Datenfeld schon ausgefuellt ist.
-//
 
-// let ergebnis = createCounter(ref, 10).then(() => {
-//     return incrementCounter(db, ref, 10);
-// }).then(() => {
-//     return getCount(ref);
-// });
 
-// ergebnis.then(function(value){console.log(value, "ergebnis")});
+let ergebnis = createCounter(ref, 10).then(() => {
+    return incrementCounter(db, ref, 10);
+}).then(() => {
+    return getCount(ref);
+});
+
+ergebnis.then(function(value){console.log(value, "ergebnis")});
 
 
 export enum BubbleType {
