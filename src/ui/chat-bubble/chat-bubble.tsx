@@ -72,6 +72,7 @@ export interface ChatBubbleProperties {
 interface ChatBubbleState {
     touched: boolean;
     expanded: boolean;
+    pollSent: boolean;
 }
 
 function setExpandedState(target: ChatBubble, toValue: boolean) {
@@ -178,216 +179,231 @@ function renderPoll(bindTo: ChatBubble) {
     if (!bindTo.props.poll) {
         return null;
     }
+    let retVal;
 
-    return (
-        <div key="text" className={styles.bubblePollPadding}>
-            <div className={styles.bubblePoll} ref={el => (bindTo.textElement = el)}>
-                <div>{bindTo.props.poll.question}</div>
-                <div className={styles.bubblePollButtonsContainer}>
-                    <button className={styles.bubblePollButtons} onClick={() => {
-                        console.log("sdf")
+    if (!bindTo.state.pollSent) {
+        retVal = (
+            <div key="text" className={styles.bubblePollPadding}>
 
-                        incrementCounter(db, ref, 10);
-                        let test = getCount(ref);
-                        test.then(function (value) {
-                            console.log(value, 'value')
-                        })
-                        db.collection('suggestions').add({name2: "1"})
-                    }}>
-                        {bindTo.props.poll.choices[0]}
-                    </button>
-                    <button className={styles.bubblePollButtons} onClick={() => {
-                        console.log("ard")
-                        db.collection('suggestions').add({name: "2"})
-                    }}>
-                        {bindTo.props.poll.choices[1]}
-                    </button>
+                <div className={styles.bubblePoll} ref={el => (bindTo.textElement = el)}>
+                    <div>{bindTo.props.poll.question}</div>
+                    <div className={styles.bubblePollButtonsContainer}>
+                        <button className={styles.bubblePollButtons} onClick={() => {
+                            console.log("sdf")
+
+                            incrementCounter(db, ref, 10);
+                            let test = getCount(ref);
+                            test.then(function (value) {
+                                console.log(value, 'value')
+                            })
+                            db.collection('suggestions').add({name2: "1"})
+                        }}>
+                            {bindTo.props.poll.choices[0]}
+                        </button>
+                        <button className={styles.bubblePollButtons} onClick={() => {
+                            console.log("ard")
+                            db.collection('suggestions').add({name: "2"})
+                            bindTo.setState({pollSent: true});
+                        }}>
+                            {bindTo.props.poll.choices[1]}
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-
-}
-
-function renderLink(props: ChatBubbleProperties) {
-    if (!props.link) {
-        return null;
-    }
-    if (props.link.specialAction === "open-contact-menu") {
-        return (
-            <div
-                key="link"
-                onClick={() => showOrHideContactBox("Post-episode CTA")}
-                className={styles.bubbleText + " " + styles.bubbleLink}
-            >
-                {props.link.title}
-            </div>
         );
-    }
+    } else {
+        retVal = (
+            <div key="text" className={styles.bubblePollPadding}>
 
-    if (props.link.specialAction === "open-side-menu") {
-        return (
-            <div
-                key="link"
-                onClick={showOrHideSideMenu}
-                className={styles.bubbleText + " " + styles.bubbleLink}
-            >
-                {props.link.title}
+                <div className={styles.bubblePoll} ref={el => (bindTo.textElement = el)}>
+                    lalala
+                </div>
             </div>
-        );
+        )
     }
-
-    // let linkImage: JSX.Element | undefined;
-    // if (props.link.image) {
-    //     linkImage = <img src={props.link.image} className={styles.bubbleLinkImage} />;
-    // }
-
-    return (
-        <a
-            onClick={() => {
-                sendEvent("Web Browser", "Link Click", props.link!.url);
-            }}
-            key="link"
-            target="_blank"
-            className={styles.bubbleText + " " + styles.bubbleLink}
-            href={props.link.url}
-        >
-            {props.link.title}
-            {/* <div className={styles.bubbleLinkImageContainer}>{linkImage}</div> */}
-        </a>
-    );
+    return retVal;
 }
 
-function renderChapterIndicator(chapter: Chapter | undefined) {
-    if (!chapter) {
-        return null;
-    }
-    return (
-        <div key={"chapter-indicator"}>
-            <div className={styles.chapterIndicatorText}>{chapter.name}</div>
-            <div className={styles.chapterIndicatorLine}/>
-        </div>
-    );
-}
-
-export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState> {
-    containerElement: HTMLDivElement | null;
-    textElement: HTMLDivElement | null;
-
-    constructor(props) {
-        super(props);
-        this.setTouch = this.setTouch.bind(this);
-        this.state = {
-            touched: false,
-            expanded: false
-        };
-        this.maybeOpenPhotoSwipe = this.maybeOpenPhotoSwipe.bind(this);
-        this.maybeClosePhotoSwipe = this.maybeClosePhotoSwipe.bind(this);
-    }
-
-    render() {
-        let className = styles.bubble;
-
-        if (this.props.chapterIndicator) {
-            className = styles.chapterIndicator;
-        }
-
-        if (this.props.images && this.props.images.length > 0) {
-            className += " " + styles.bubbleFullWidth;
-        }
-
-        if (this.state.touched) {
-            className += " " + styles.bubbleTouch;
-        }
-
-        let elements = [
-            renderChapterIndicator(this.props.chapterIndicator),
-            renderImage(this),
-            renderText(this),
-            renderLink(this.props),
-            renderPoll(this),
-        ];
-
-        if (elements.some(el => el !== null) === false) {
+    function renderLink(props: ChatBubbleProperties) {
+        if (!props.link) {
             return null;
         }
-
-        let containerClassName = styles.bubbleContainer;
-
-        if (this.props.link) {
-            containerClassName += " " + styles.linkContainer;
+        if (props.link.specialAction === "open-contact-menu") {
+            return (
+                <div
+                    key="link"
+                    onClick={() => showOrHideContactBox("Post-episode CTA")}
+                    className={styles.bubbleText + " " + styles.bubbleLink}
+                >
+                    {props.link.title}
+                </div>
+            );
         }
 
-        return (
-            <div className={containerClassName} ref={el => (this.containerElement = el)}>
-                <div className={className} onTouchStart={this.setTouch} onTouchEnd={this.setTouch}>
-                    {elements}
+        if (props.link.specialAction === "open-side-menu") {
+            return (
+                <div
+                    key="link"
+                    onClick={showOrHideSideMenu}
+                    className={styles.bubbleText + " " + styles.bubbleLink}
+                >
+                    {props.link.title}
                 </div>
+            );
+        }
+
+        // let linkImage: JSX.Element | undefined;
+        // if (props.link.image) {
+        //     linkImage = <img src={props.link.image} className={styles.bubbleLinkImage} />;
+        // }
+
+        return (
+            <a
+                onClick={() => {
+                    sendEvent("Web Browser", "Link Click", props.link!.url);
+                }}
+                key="link"
+                target="_blank"
+                className={styles.bubbleText + " " + styles.bubbleLink}
+                href={props.link.url}
+            >
+                {props.link.title}
+                {/* <div className={styles.bubbleLinkImageContainer}>{linkImage}</div> */}
+            </a>
+        );
+    }
+
+    function renderChapterIndicator(chapter: Chapter | undefined) {
+        if (!chapter) {
+            return null;
+        }
+        return (
+            <div key={"chapter-indicator"}>
+                <div className={styles.chapterIndicatorText}>{chapter.name}</div>
+                <div className={styles.chapterIndicatorLine}/>
             </div>
         );
     }
 
-    maybeOpenPhotoSwipe(e: ServiceWorkerMessageEvent) {
-        if (e.data.command !== "podmod.openphoto") {
-            return;
-        }
-        if (e.data.url !== this.props.images![0].url) {
-            return;
+    export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState> {
+        containerElement: HTMLDivElement | null;
+        textElement: HTMLDivElement | null;
+
+        constructor(props) {
+            super(props);
+            this.setTouch = this.setTouch.bind(this);
+            this.state = {
+                touched: false,
+                expanded: false,
+                pollSent: false
+            };
+            this.maybeOpenPhotoSwipe = this.maybeOpenPhotoSwipe.bind(this);
+            this.maybeClosePhotoSwipe = this.maybeClosePhotoSwipe.bind(this);
         }
 
-        this.setState({
-            expanded: true
-        });
+        render() {
+            let className = styles.bubble;
+
+            if (this.props.chapterIndicator) {
+                className = styles.chapterIndicator;
+            }
+
+            if (this.props.images && this.props.images.length > 0) {
+                className += " " + styles.bubbleFullWidth;
+            }
+
+            if (this.state.touched) {
+                className += " " + styles.bubbleTouch;
+            }
+
+            let elements = [
+                renderChapterIndicator(this.props.chapterIndicator),
+                renderImage(this),
+                renderText(this),
+                renderLink(this.props),
+                renderPoll(this),
+            ];
+
+            if (elements.some(el => el !== null) === false) {
+                return null;
+            }
+
+            let containerClassName = styles.bubbleContainer;
+
+            if (this.props.link) {
+                containerClassName += " " + styles.linkContainer;
+            }
+
+            return (
+                <div className={containerClassName} ref={el => (this.containerElement = el)}>
+                    <div className={className} onTouchStart={this.setTouch} onTouchEnd={this.setTouch}>
+                        {elements}
+                    </div>
+                </div>
+            );
+        }
+
+        maybeOpenPhotoSwipe(e: ServiceWorkerMessageEvent) {
+            if (e.data.command !== "podmod.openphoto") {
+                return;
+            }
+            if (e.data.url !== this.props.images![0].url) {
+                return;
+            }
+
+            this.setState({
+                expanded: true
+            });
+        }
+
+        maybeClosePhotoSwipe(e: ServiceWorkerMessageEvent) {
+            console.log("FIRING LISTENER");
+            if (e.data.command !== "podmod.closephoto" || this.state.expanded === false) {
+                return;
+            }
+            console.info("Closing photo in response to postMessage");
+            this.setState({
+                expanded: false
+            });
+        }
+
+        componentDidMount() {
+            if (this.textElement && this.containerElement) {
+                // If it's just a text bubble it doesn't automatically change width according to the size
+                // of the text container. We have to manually force it to do so.
+                // this.containerElement.style.width = this.textElement.getBoundingClientRect().width + "px";
+            }
+
+            if (this.props.images && this.props.images.length > 0 && "serviceWorker" in navigator) {
+                window.navigator.serviceWorker.addEventListener("message", this.maybeOpenPhotoSwipe);
+            }
+        }
+
+        componentWillUnmount() {
+            if (this.props.images && this.props.images.length > 0 && "serviceWorker" in navigator) {
+                window.navigator.serviceWorker.removeEventListener("message", this.maybeOpenPhotoSwipe);
+                window.navigator.serviceWorker.removeEventListener("message", this.maybeClosePhotoSwipe);
+            }
+        }
+
+        componentDidUpdate(oldProps, oldState: ChatBubbleState) {
+            if (!this.props.images || this.props.images.length === 0 || "serviceWorker" in navigator === false) {
+                return;
+            }
+            if (oldState.expanded === false && this.state.expanded === true) {
+                console.log("SETTING LISTENER");
+                window.navigator.serviceWorker.addEventListener("message", this.maybeClosePhotoSwipe);
+            } else if (oldState.expanded === true && this.state.expanded === false) {
+                console.log("REMOVING LISTENER");
+                window.navigator.serviceWorker.removeEventListener("message", this.maybeClosePhotoSwipe);
+            }
+        }
+
+        setTouch(e: React.TouchEvent<HTMLDivElement>) {
+            if (e.type === "touchstart") {
+                this.setState({touched: true});
+            } else {
+                this.setState({touched: false});
+            }
+        }
     }
-
-    maybeClosePhotoSwipe(e: ServiceWorkerMessageEvent) {
-        console.log("FIRING LISTENER");
-        if (e.data.command !== "podmod.closephoto" || this.state.expanded === false) {
-            return;
-        }
-        console.info("Closing photo in response to postMessage");
-        this.setState({
-            expanded: false
-        });
-    }
-
-    componentDidMount() {
-        if (this.textElement && this.containerElement) {
-            // If it's just a text bubble it doesn't automatically change width according to the size
-            // of the text container. We have to manually force it to do so.
-            // this.containerElement.style.width = this.textElement.getBoundingClientRect().width + "px";
-        }
-
-        if (this.props.images && this.props.images.length > 0 && "serviceWorker" in navigator) {
-            window.navigator.serviceWorker.addEventListener("message", this.maybeOpenPhotoSwipe);
-        }
-    }
-
-    componentWillUnmount() {
-        if (this.props.images && this.props.images.length > 0 && "serviceWorker" in navigator) {
-            window.navigator.serviceWorker.removeEventListener("message", this.maybeOpenPhotoSwipe);
-            window.navigator.serviceWorker.removeEventListener("message", this.maybeClosePhotoSwipe);
-        }
-    }
-
-    componentDidUpdate(oldProps, oldState: ChatBubbleState) {
-        if (!this.props.images || this.props.images.length === 0 || "serviceWorker" in navigator === false) {
-            return;
-        }
-        if (oldState.expanded === false && this.state.expanded === true) {
-            console.log("SETTING LISTENER");
-            window.navigator.serviceWorker.addEventListener("message", this.maybeClosePhotoSwipe);
-        } else if (oldState.expanded === true && this.state.expanded === false) {
-            console.log("REMOVING LISTENER");
-            window.navigator.serviceWorker.removeEventListener("message", this.maybeClosePhotoSwipe);
-        }
-    }
-
-    setTouch(e: React.TouchEvent<HTMLDivElement>) {
-        if (e.type === "touchstart") {
-            this.setState({touched: true});
-        } else {
-            this.setState({touched: false});
-        }
-    }
-}
