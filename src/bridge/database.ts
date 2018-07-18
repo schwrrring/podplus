@@ -1,8 +1,6 @@
 import * as firebase from 'firebase'
 import firestore from 'firebase/firebase-firestore'
 
-
-
 interface FirebaseConfig{
     apiKey: string,
     authDomain: string,
@@ -29,15 +27,13 @@ const firestore = firebase.firestore();
 
 firestore.settings({timestampsInSnapshots: true})
 
-
-
-
 export const db = firebase.firestore();
 
 export function createCounter ( ref: firebase.firestore.DocumentReference, num_shards: number) {
-    var batch = db.batch();
 
+    var batch = db.batch();
     // Initialize the counter document
+
     batch.set(ref, { num_shards: num_shards }, {merge: true});
 
     // Initialize each shard with count=0

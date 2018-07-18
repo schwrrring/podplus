@@ -14,38 +14,38 @@ import {httpGet} from "../../bridge/httpRequest";
 import {db, createCounter, incrementCounter, getCount} from "../../bridge/database";
 
 
-let ref = db.collection('counters').doc("test");
-const ergebnis = getCount(ref)
-ergebnis.then(function (value) {
-    console.log(value);
-    if (value.exists) {
-        createCounter(ref, 10)
-    }
-})
+// let ref = db.collection('counters').doc("test");
+// const ergebnis = getCount(ref)
+// ergebnis.then(function (value) {
+//     console.log(value);
+//     if (value.exists) {
+//         createCounter(ref, 10)
+//     }
+// })
 
-incrementCounter(db, ref, 10)
-// Query Results:
-// db.collection("counters").doc('test').collection('shards').where("count", ">=", 30)
-//     .get()
-//     .then(function(querySnapshot) {
-//         querySnapshot.forEach(function(doc) {
-//             // doc.data() is never undefined for query doc snapshots
-//             console.log("123", " => ", doc.data());
-//         });
-//     })
-//     .catch(function(error) {
-//         console.log("Error getting documents: ", error);
-//     });
-
-
-// TODO: beachten, ueberlegen, dass das hier dafuer verantwortlich ist eine neue
-// Counter anzulegen, hier muss irgendwie ein conditional rein, dass guckt, ob d
-// das Datenfeld schon ausgefuellt ist.
-
-
-ergebnis.then(function (value) {
-    console.log(value, "ergebnis")
-});
+// incrementCounter(db, ref, 10)
+// // Query Results:
+// // db.collection("counters").doc('test').collection('shards').where("count", ">=", 30)
+// //     .get()
+// //     .then(function(querySnapshot) {
+// //         querySnapshot.forEach(function(doc) {
+// //             // doc.data() is never undefined for query doc snapshots
+// //             console.log("123", " => ", doc.data());
+// //         });
+// //     })
+// //     .catch(function(error) {
+// //         console.log("Error getting documents: ", error);
+// //     });
+//
+//
+// // TODO: beachten, ueberlegen, dass das hier dafuer verantwortlich ist eine neue
+// // Counter anzulegen, hier muss irgendwie ein conditional rein, dass guckt, ob d
+// // das Datenfeld schon ausgefuellt ist.
+//
+//
+// ergebnis.then(function (value) {
+//     console.log(value, "ergebnis")
+// });
 
 
 export enum BubbleType {
@@ -71,6 +71,8 @@ export interface ChatBubbleLink {
 export interface ChatBubblePollInt {
     question: string;
     choices: string[];
+    followUp: string;
+    pollID: string;
 }
 
 export interface ChatBubbleProperties {
@@ -194,51 +196,14 @@ function renderPoll(bindTo: ChatBubble) {
     if (!bindTo.props.poll) {
         return null;
     }
-    let retVal;
 
-    if (!bindTo.state.pollSent) {
-        retVal = (
+    return  (<ChatBubblePoll
+        question={bindTo.props.poll.question}
+        choices={bindTo.props.poll.choices}
+        followUp={bindTo.props.poll.followUp}
+        pollID={bindTo.props.poll.pollID}
 
-
-            <div key="text" className={styles.bubblePollPadding}>
-
-                <div className={styles.bubblePoll} ref={el => (bindTo.textElement = el)}>
-                    <div>{bindTo.props.poll.question}</div>
-                    <div className={styles.bubblePollButtonsContainer}>
-                        <ChatBubblePoll></ChatBubblePoll>
-                        <button className={styles.bubblePollButtons} onClick={() => {
-
-                            incrementCounter(db, ref, 10);
-                            let test = getCount(ref);
-
-                            test.then(function (value) {
-                                bindTo.setState({pollSent: value});
-                                console.log(value, 'value')
-                            })
-
-                        }}>
-                            {bindTo.props.poll.choices[0]}
-                        </button>
-                        <button className={styles.bubblePollButtons} onClick={() => {
-                            console.log("ard")
-                        }}>
-                            {bindTo.props.poll.choices[1]}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    } else {
-        retVal = (
-            <div key="text" className={styles.bubblePollPadding}>
-
-                <div className={styles.bubblePoll} ref={el => (bindTo.textElement = el)}>
-                    {bindTo.state.pollSent}
-                </div>
-            </div>
-        )
-    }
-    return retVal;
+    />)
 }
 
 function renderLink(props: ChatBubbleProperties) {

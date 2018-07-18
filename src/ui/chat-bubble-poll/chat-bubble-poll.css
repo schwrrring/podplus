@@ -1,4 +1,13 @@
-.bubble-container {
-    text-align: left;
-    margin-right: auto;
+
+.bubble-poll-padding {
+    padding: 10px 15px;
+    background-color: #5ebfba;
+}
+
+.bubble-poll-buttons{
+    font-size: 20px;
+}
+
+.bubble-poll-buttons-container{
+    text-align: center;
 }
