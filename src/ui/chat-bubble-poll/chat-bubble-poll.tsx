@@ -31,7 +31,8 @@ export class ChatBubblePoll extends Component<ChatBubblePollProperties, ChatBubb
     }
 
     setUpDatabase() {
-        let ref = db.collection(this.props.pollID).doc("test");
+        for(var i=0; i<=this.props.choices.length; i++){}
+        let ref = db.collection(this.props.pollID).doc(this.props.choices[0]);
         const ergebnis = ref.get()
         ergebnis.then(function (value) {
             console.log(value, "existiert Ckers?");

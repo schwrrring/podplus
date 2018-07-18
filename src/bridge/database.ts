@@ -30,7 +30,6 @@ firestore.settings({timestampsInSnapshots: true})
 export const db = firebase.firestore();
 
 export function createCounter ( ref: firebase.firestore.DocumentReference, num_shards: number) {
-
     var batch = db.batch();
     // Initialize the counter document
 
