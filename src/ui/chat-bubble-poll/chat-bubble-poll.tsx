@@ -15,8 +15,8 @@ interface ChatBubblePollProperties {
 
 interface ChatBubblePollState {
     pollSent: boolean;
-    databaseRef: any;
-    value: number;
+    databaseRefs: any[];
+    value: any;
 }
 
 export class ChatBubblePoll extends Component<ChatBubblePollProperties, ChatBubblePollState> {
@@ -24,24 +24,30 @@ export class ChatBubblePoll extends Component<ChatBubblePollProperties, ChatBubb
         super(props);
         this.state = {
             pollSent: false,
-            databaseRef: undefined, // Todo:fix any
-            value: 0
+            databaseRefs: [], // Todo:fix any
+            value: []
         }
         this.setUpDatabase = this.setUpDatabase.bind(this);
     }
 
     setUpDatabase() {
-        for(var i=0; i<=this.props.choices.length; i++){}
-        let ref = db.collection(this.props.pollID).doc(this.props.choices[0]);
-        const ergebnis = ref.get()
-        ergebnis.then(function (value) {
-            console.log(value, "existiert Ckers?");
-            if (!value.exists) {
+        let temp:any[];
+        temp = [];
+        for(var i=0; i<this.props.choices.length; i++) {
+            let ref = db.collection(this.props.pollID).doc(this.props.choices[i]);
+            const ergebnis = ref.get()
+            ergebnis.then(function (value) {
+                console.log(value, "existiert Ckers?");
+                if (!value.exists) {
+                    createCounter(ref, 10)
+                }
+            })
+            temp.push(ref)
+        }
+        this.setState(
+             {databaseRefs: temp}
+        )
 
-                createCounter(ref, 10)
-            }
-        })
-        this.setState({databaseRef: ref})
     }
 
     componentDidMount() {
@@ -59,31 +65,31 @@ export class ChatBubblePoll extends Component<ChatBubblePollProperties, ChatBubb
                 <div className={styles.bubblePollButtonsContainer}>
 
                     <button className={styles.bubblePollButtons} onClick={() => {
-                        incrementCounter(db, this.state.databaseRef, 10);
-                        let test = getCount(this.state.databaseRef);
-
-                        test.then(function (value) {
-                            self.setState({
-                                pollSent: true,
-                                value: value,
-                            });
-                            console.log(value, 'value')
-                        })
-
+                        incrementCounter(db, this.state.databaseRefs[0], 10);
+                        let iterable = this.state.databaseRefs.map((val)=>getCount(val) );
+                        let results = Promise.all(iterable)
+                            .then((valutys) => {
+                                this.setState({
+                                    pollSent: true,
+                                    value: valutys
+                                })
+                                console.log(valutys, 'na, klappts')
+                            })
                     }}>
                         {this.props.choices[0]}
                     </button>
                     <button className={styles.bubblePollButtons} onClick={() => {
-                        console.log("ard")
-                        incrementCounter(db, this.state.databaseRef, 10);
-                        let test = getCount(this.state.databaseRef);
 
-                        test.then(function (value) {
-                            self.setState({
-                                value: value,
-                            });
-                            console.log(value, 'value')
-                        })
+                        incrementCounter(db, this.state.databaseRefs[1], 10);
+                        let iterable = this.state.databaseRefs.map((val)=>getCount(val) );
+                        let results = Promise.all(iterable)
+                            .then((valutys) => {
+                                this.setState({
+                                    pollSent: true,
+                                    value: valutys
+                                })
+                                console.log(valutys, 'na, klappts')
+                            })
                     }}>
                         {this.props.choices[1]}
                     </button>
@@ -94,8 +100,8 @@ export class ChatBubblePoll extends Component<ChatBubblePollProperties, ChatBubb
             retVal = (
                 <div key="text" className={styles.bubblePollPadding}>
                     {this.props.followUp}
-                    {this.props.choices[0]}: {this.state.value}
-                    {this.props.choices[1]}: {this.state.value}
+                    {this.props.choices[0]}: {this.state.value[0]}
+                    {this.props.choices[1]}: {this.state.value[1]}
                 </div>
             )
         }
