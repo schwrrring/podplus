@@ -26,6 +26,21 @@ export interface ChatBubbleImage {
     video?: boolean;
 }
 
+export interface ChatBubblePollProperties {
+    question: string;
+    choices: string[];
+    followUp?: string;
+    pollID: string;
+
+}
+
+
+export interface ChatBubblePollState {
+    pollSent: boolean;
+    databaseRefs: any[];
+    value: any;
+}
+
 export interface ChatBubbleLink {
     title: string;
     url: string;
