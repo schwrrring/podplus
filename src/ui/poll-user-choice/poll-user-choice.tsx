@@ -19,7 +19,7 @@ interface ChatBubblePollState {
     value: any;
 }
 
-export class ChatBubblePoll extends Component<ChatBubblePollProperties, ChatBubblePollState> {
+export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubblePollState> {
     constructor(props) {
         super(props);
         this.state = {

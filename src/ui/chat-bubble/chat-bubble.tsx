@@ -7,7 +7,7 @@ import {Chapter, makeRelative} from "../../interfaces/script";
 import {showOrHideContactBox} from "../contact-box/contact-box";
 import {showOrHideSideMenu} from "../side-menu/side-menu";
 import {sendEvent} from "../../util/analytics";
-import {ChatBubblePoll} from "../chat-bubble-poll/chat-bubble-poll";
+import {PollUserChoice} from "../poll-user-choice/poll-user-choice";
 
 // tryouts
 import {httpGet} from "../../bridge/httpRequest";
@@ -162,7 +162,7 @@ function renderPoll(bindTo: ChatBubble) {
         return null;
     }
 
-    return  (<ChatBubblePoll
+    return  (<PollUserChoice
         question={bindTo.props.poll.question}
         choices={bindTo.props.poll.choices}
         followUp={bindTo.props.poll.followUp}
