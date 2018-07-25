@@ -13,41 +13,6 @@ import {ChatBubblePoll} from "../chat-bubble-poll/chat-bubble-poll";
 import {httpGet} from "../../bridge/httpRequest";
 import {db, createCounter, incrementCounter, getCount} from "../../bridge/database";
 
-
-// let ref = db.collection('counters').doc("test");
-// const ergebnis = getCount(ref)
-// ergebnis.then(function (value) {
-//     console.log(value);
-//     if (value.exists) {
-//         createCounter(ref, 10)
-//     }
-// })
-
-// incrementCounter(db, ref, 10)
-// // Query Results:
-// // db.collection("counters").doc('test').collection('shards').where("count", ">=", 30)
-// //     .get()
-// //     .then(function(querySnapshot) {
-// //         querySnapshot.forEach(function(doc) {
-// //             // doc.data() is never undefined for query doc snapshots
-// //             console.log("123", " => ", doc.data());
-// //         });
-// //     })
-// //     .catch(function(error) {
-// //         console.log("Error getting documents: ", error);
-// //     });
-//
-//
-// // TODO: beachten, ueberlegen, dass das hier dafuer verantwortlich ist eine neue
-// // Counter anzulegen, hier muss irgendwie ein conditional rein, dass guckt, ob d
-// // das Datenfeld schon ausgefuellt ist.
-//
-//
-// ergebnis.then(function (value) {
-//     console.log(value, "ergebnis")
-// });
-
-
 export enum BubbleType {
     text = "text"
 }
