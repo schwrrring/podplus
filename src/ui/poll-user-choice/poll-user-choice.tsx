@@ -98,12 +98,23 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 
             </div>)
         } else {
+
+            let followUptext: React.CSSProperties = {
+               marginBottom: "3px";
+            };
             retVal = (
-                <div key="text" className={styles.bubblePollButtonsContainer}>
-                    {this.props.followUp}
-                    {this.props.choices[0]}: {this.state.value[0]}
-                    {this.props.choices[1]}: {this.state.value[1]}
+                <div key="text" className={styles.bubbleTextPadding}>
+                    <div className={styles.bubbleText}>
+                        <div style={followUptext}>{this.props.followUp}</div>
+                        <div>
+                            {this.props.choices[0]}: {this.state.value[0]}
+                        </div>
+                        <div>
+                            {this.props.choices[1]}: {this.state.value[1]}
+                        </div>
+                    </div>
                 </div>
+
             )
         }
         return retVal
