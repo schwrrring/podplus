@@ -8,7 +8,7 @@ export const bubbleTextPadding: string;
 export const bubbleText: string;
 export const bubbleLink: string;
 export const bubblePoll: string;
-export const bubblePollPadding: string;
+export const pollUserChoicePadding: string;
 export const bubblePollButtons: string;
 export const bubblePollButtonsContainer: string;
 export const bubbleLinkTitle: string;

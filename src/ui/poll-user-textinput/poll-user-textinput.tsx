@@ -73,7 +73,7 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
                 </div>)
         } else {
             retVal = (
-                <div key="text" className={styles.bubblePollPadding}>
+                <div key="text" className={styles.pollUserChoicePadding}>
                     {this.props.followUp}
                 </div>
             )

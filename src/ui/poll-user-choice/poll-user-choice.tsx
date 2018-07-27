@@ -56,14 +56,14 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 
 
     render() {
-        let self = this;
 
         let retVal;
         if (!this.state.pollSent) {
             retVal = (<div>
-                <div>{this.props.question}</div>
+
                 <div className={styles.bubblePollButtonsContainer}>
-                    <button className={styles.bubblePollButtons} onClick={() => {
+                    <div>{this.props.question}</div>
+                    <button className={styles.bubblePollButtonsContainer} onClick={() => {
                         incrementCounter(db, this.state.databaseRefs[0], 10);
                         let iterable = this.state.databaseRefs.map((val)=>getCount(val) );
                         let results = Promise.all(iterable)
@@ -97,7 +97,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
             </div>)
         } else {
             retVal = (
-                <div key="text" className={styles.bubblePollPadding}>
+                <div key="text" className={styles.bubblePollButtonsContainer}>
                     {this.props.followUp}
                     {this.props.choices[0]}: {this.state.value[0]}
                     {this.props.choices[1]}: {this.state.value[1]}
