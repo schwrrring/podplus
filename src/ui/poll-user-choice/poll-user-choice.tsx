@@ -1,4 +1,4 @@
-import * as styles from "./chat-bubble-poll.css";
+import * as styles from "./poll-user-choice.css";
 import * as React from "react";
 import {Component} from "react";
 import {ChatBubbleImage, ChatBubbleLink, ChatBubbleProperties} from "../chat-bubble/chat-bubble";
