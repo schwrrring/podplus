@@ -177,7 +177,7 @@ function renderPoll(bindTo: ChatBubble) {
     if (!bindTo.props.poll) {
         return null;
     }
-    if(bindTo.props.poll.choices.length == 0) {
+    if(bindTo.props.poll.choices.length > 0) {
         return (<PollUserChoice
             question={bindTo.props.poll.question}
             choices={bindTo.props.poll.choices}
@@ -187,7 +187,7 @@ function renderPoll(bindTo: ChatBubble) {
         />)
     }
     else {
-        console.log("kommt das echt gerade hier her?")
+
         return (<PollUserTextinput
             question={bindTo.props.poll.question}
             choices={bindTo.props.poll.choices}

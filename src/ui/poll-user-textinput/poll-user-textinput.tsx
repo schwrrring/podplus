@@ -60,36 +60,14 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
                     <textarea rows={4} cols={50}>
 At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
 </textarea>
-
-                        <button className={styles.bubblePollButtons} onClick={() => {
-                            incrementCounter(db, this.state.databaseRefs[0], 10);
-                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
-                            let results = Promise.all(iterable)
-                                .then((valutys) => {
-                                    this.setState({
-                                        pollSent: true,
-                                        value: valutys
-                                    })
-                                    console.log(valutys, 'na, klappts')
-                                })
-                        }}>
-                            {this.props.choices[0]}
+                        <div>
+                        <button onClick={()=> { this.setState({ pollSent: true} )}}>
+                            Abbrechen
                         </button>
-                        <button className={styles.bubblePollButtons} onClick={() => {
-
-                            incrementCounter(db, this.state.databaseRefs[1], 10);
-                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
-                            let results = Promise.all(iterable)
-                                .then((valutys) => {
-                                    this.setState({
-                                        pollSent: true,
-                                        value: valutys
-                                    })
-                                    console.log(valutys, 'na, klappts')
-                                })
-                        }}>
-                            {this.props.choices[1]}
+                        <button onClick={()=> { this.setState({ pollSent: true} )}}>
+                            Senden
                         </button>
+                        </div>
                     </div>
 
                 </div>)
@@ -97,8 +75,6 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
             retVal = (
                 <div key="text" className={styles.bubblePollPadding}>
                     {this.props.followUp}
-                    {this.props.choices[0]}: {this.state.value[0]}
-                    {this.props.choices[1]}: {this.state.value[1]}
                 </div>
             )
         }

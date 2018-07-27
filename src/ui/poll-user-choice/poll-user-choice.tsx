@@ -63,7 +63,6 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
             retVal = (<div>
                 <div>{this.props.question}</div>
                 <div className={styles.bubblePollButtonsContainer}>
-
                     <button className={styles.bubblePollButtons} onClick={() => {
                         incrementCounter(db, this.state.databaseRefs[0], 10);
                         let iterable = this.state.databaseRefs.map((val)=>getCount(val) );
