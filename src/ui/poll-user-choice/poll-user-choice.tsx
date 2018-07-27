@@ -64,35 +64,35 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                 <div className={styles.bubblePollButtonsContainer}>
                     <div>{this.props.question}</div>
 
-                        <button className={styles.bubblePollButtons} onClick={() => {
-                            incrementCounter(db, this.state.databaseRefs[0], 10);
-                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
-                            let results = Promise.all(iterable)
-                                .then((valutys) => {
-                                    this.setState({
-                                        pollSent: true,
-                                        value: valutys
-                                    })
-                                    console.log(valutys, 'na, klappts')
+                    <button className={styles.bubblePollButtons} onClick={() => {
+                        incrementCounter(db, this.state.databaseRefs[0], 10);
+                        let iterable = this.state.databaseRefs.map((val) => getCount(val));
+                        let results = Promise.all(iterable)
+                            .then((valutys) => {
+                                this.setState({
+                                    pollSent: true,
+                                    value: valutys
                                 })
-                        }}>
-                            {this.props.choices[0]}
-                        </button>
-                        <button className={styles.bubblePollButtons} onClick={() => {
+                                console.log(valutys, 'na, klappts')
+                            })
+                    }}>
+                        {this.props.choices[0]}
+                    </button>
+                    <button className={styles.bubblePollButtons} onClick={() => {
 
-                            incrementCounter(db, this.state.databaseRefs[1], 10);
-                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
-                            let results = Promise.all(iterable)
-                                .then((valutys) => {
-                                    this.setState({
-                                        pollSent: true,
-                                        value: valutys
-                                    })
-                                    console.log(valutys, 'na, klappts')
+                        incrementCounter(db, this.state.databaseRefs[1], 10);
+                        let iterable = this.state.databaseRefs.map((val) => getCount(val));
+                        let results = Promise.all(iterable)
+                            .then((valutys) => {
+                                this.setState({
+                                    pollSent: true,
+                                    value: valutys
                                 })
-                        }}>
-                            {this.props.choices[1]}
-                        </button>
+                                console.log(valutys, 'na, klappts')
+                            })
+                    }}>
+                        {this.props.choices[1]}
+                    </button>
 
                 </div>
 
@@ -100,17 +100,19 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         } else {
 
             let followUptext: React.CSSProperties = {
-               marginBottom: "3px";
+                color: "#0c327d",
+                fontSize: "1.4em",
+                marginBottom: "8px"
             };
             retVal = (
                 <div key="text" className={styles.bubbleTextPadding}>
                     <div className={styles.bubbleText}>
                         <div style={followUptext}>{this.props.followUp}</div>
                         <div>
-                            {this.props.choices[0]}: {this.state.value[0]}
+                            {this.props.choices[0]}: {calculatePercentage(this.state.value[0], this.state.value[1])} %
                         </div>
                         <div>
-                            {this.props.choices[1]}: {this.state.value[1]}
+                            {this.props.choices[1]}: {calculatePercentage(this.state.value[1], this.state.value[0])} %
                         </div>
                     </div>
                 </div>
@@ -119,4 +121,12 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         }
         return retVal
     }
+}
+
+function calculatePercentage(a: number, b: number) {
+    let aInpercent: number;
+
+    aInpercent =  Math.floor((a / (a + b) * 100));
+
+    return aInpercent
 }
