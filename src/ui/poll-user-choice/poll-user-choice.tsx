@@ -123,6 +123,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
     }
 }
 
+
 function calculatePercentage(a: number, b: number) {
     let aInpercent: number;
 

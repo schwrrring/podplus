@@ -1434,6 +1434,46 @@ a.pswp__share--download:hover {
 .side-menu__contact-us a {
     color: #848484;
 }
+
+.poll-user-choice__bubble-poll-buttons {
+    background-color: #cddce9;
+    color: #0C174E;
+    font-size: 1.1em;
+
+    font-family: "NDRSansCondRegular";
+    margin-top: 11px;
+    margin-right: 8px;
+    margin-left: 8px;
+    width: 65px;
+}
+
+.poll-user-choice__bubble-text-padding {
+    padding: 10px 15px;
+}
+
+.poll-user-choice__bubble-text {
+    display: inline;
+    font-size: 16px;
+}
+.poll-user-choice__bubble-poll-buttons-container{
+    text-align: center;
+    padding: 10px 15px;
+}
+
+.poll-user-textinput__poll-user-choice-padding {
+
+    padding: 10px 15px;
+    background-color: #5ebfba;
+}
+
+.poll-user-textinput__bubble-poll-buttons{
+    font-size: 20px;
+}
+
+.poll-user-textinput__bubble-poll-buttons-container{
+    text-align: center;
+}
+
 .start-button__start-button-container {
     position: absolute;
     top: 0;
