@@ -76,6 +76,11 @@
     background-color: #5ebfba;
 }
 
+.poll-container{
+    text-align: right;
+    width: 100%;
+}
+
 .bubble-poll-buttons{
     font-size: 20px;
 }

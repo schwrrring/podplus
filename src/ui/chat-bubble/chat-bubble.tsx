@@ -31,7 +31,6 @@ export interface ChatBubblePollProperties {
     choices: string[];
     followUp?: string;
     pollID: string;
-
 }
 
 
@@ -39,6 +38,7 @@ export interface ChatBubblePollState {
     pollSent: boolean;
     databaseRefs: any[];
     value: any;
+    showInputButtons: boolean;
 }
 
 export interface ChatBubbleLink {
@@ -306,6 +306,10 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
 
         if (this.props.link) {
             containerClassName += " " + styles.linkContainer;
+        }
+
+        if (this.props.poll) {
+            className += " " + styles.pollContainer;
         }
 
         return (

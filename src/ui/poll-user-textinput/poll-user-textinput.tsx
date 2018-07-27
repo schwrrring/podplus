@@ -1,6 +1,6 @@
 import * as styles from "./poll-user-textinput.css";
 import * as React from "react";
-import {Component} from "react";
+import {ChangeEvent, Component} from "react";
 import {ChatBubblePollProperties, ChatBubblePollState} from "../chat-bubble/chat-bubble";
 import {createCounter, db, getCount, incrementCounter} from "../../bridge/database";
 
@@ -11,9 +11,11 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
         this.state = {
             pollSent: false,
             databaseRefs: [],
-            value: []
+            value: [],
+            showInputButtons: false
         }
         this.setUpDatabase = this.setUpDatabase.bind(this);
+        this.showInputSendButtons = this.showInputSendButtons.bind(this);
     }
 
     setUpDatabase() {
@@ -44,6 +46,16 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
         this.setUpDatabase()
     }
 
+    showInputSendButtons(event){
+        let value = event.target.value;
+        if(value.length!=0){
+            this.setState({showInputButtons: true})
+        } else{
+            this.setState({showInputButtons: false})
+        }
+
+
+    }
 
     render() {
         let self = this;
@@ -52,22 +64,25 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
         if (!this.state.pollSent) {
             ;
             retVal = (
-                <div id={this.props.pollID}>
-
+                <div className={styles.userChoiceContainer} id={this.props.pollID}>
                     <div>{this.props.question}</div>
                     <div className={styles.bubblePollButtonsContainer}>
 
-                    <textarea rows={4} cols={50}>
-At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
-</textarea>
+                    <textarea onChange={this.showInputSendButtons} className={styles.userInputArea} placeholder={"Nachricht schreiben..."} autoFocus={true}></textarea>
+                        {this.state.showInputButtons &&
                         <div>
-                        <button onClick={()=> { this.setState({ pollSent: true} )}}>
-                            Abbrechen
-                        </button>
-                        <button onClick={()=> { this.setState({ pollSent: true} )}}>
-                            Senden
-                        </button>
+                            <button onClick={() => {
+                                this.setState({pollSent: true})
+                            }}>
+                                Abbrechen
+                            </button>
+                            <button onClick={() => {
+                                this.setState({pollSent: true})
+                            }}>
+                                Senden
+                            </button>
                         </div>
+                        }
                     </div>
 
                 </div>)
