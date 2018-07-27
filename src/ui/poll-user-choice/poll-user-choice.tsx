@@ -31,9 +31,9 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
     }
 
     setUpDatabase() {
-        let temp:any[];
+        let temp: any[];
         temp = [];
-        for(var i=0; i<this.props.choices.length; i++) {
+        for (var i = 0; i < this.props.choices.length; i++) {
             let ref = db.collection(this.props.pollID).doc(this.props.choices[i]);
             const ergebnis = ref.get()
             ergebnis.then(function (value) {
@@ -45,7 +45,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
             temp.push(ref)
         }
         this.setState(
-             {databaseRefs: temp}
+            {databaseRefs: temp}
         )
 
     }
@@ -63,35 +63,37 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 
                 <div className={styles.bubblePollButtonsContainer}>
                     <div>{this.props.question}</div>
-                    <button className={styles.bubblePollButtonsContainer} onClick={() => {
-                        incrementCounter(db, this.state.databaseRefs[0], 10);
-                        let iterable = this.state.databaseRefs.map((val)=>getCount(val) );
-                        let results = Promise.all(iterable)
-                            .then((valutys) => {
-                                this.setState({
-                                    pollSent: true,
-                                    value: valutys
-                                })
-                                console.log(valutys, 'na, klappts')
-                            })
-                    }}>
-                        {this.props.choices[0]}
-                    </button>
-                    <button className={styles.bubblePollButtons} onClick={() => {
 
-                        incrementCounter(db, this.state.databaseRefs[1], 10);
-                        let iterable = this.state.databaseRefs.map((val)=>getCount(val) );
-                        let results = Promise.all(iterable)
-                            .then((valutys) => {
-                                this.setState({
-                                    pollSent: true,
-                                    value: valutys
+                        <button className={styles.bubblePollButtons} onClick={() => {
+                            incrementCounter(db, this.state.databaseRefs[0], 10);
+                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
+                            let results = Promise.all(iterable)
+                                .then((valutys) => {
+                                    this.setState({
+                                        pollSent: true,
+                                        value: valutys
+                                    })
+                                    console.log(valutys, 'na, klappts')
                                 })
-                                console.log(valutys, 'na, klappts')
-                            })
-                    }}>
-                        {this.props.choices[1]}
-                    </button>
+                        }}>
+                            {this.props.choices[0]}
+                        </button>
+                        <button className={styles.bubblePollButtons} onClick={() => {
+
+                            incrementCounter(db, this.state.databaseRefs[1], 10);
+                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
+                            let results = Promise.all(iterable)
+                                .then((valutys) => {
+                                    this.setState({
+                                        pollSent: true,
+                                        value: valutys
+                                    })
+                                    console.log(valutys, 'na, klappts')
+                                })
+                        }}>
+                            {this.props.choices[1]}
+                        </button>
+
                 </div>
 
             </div>)
