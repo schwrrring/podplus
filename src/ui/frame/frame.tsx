@@ -74,6 +74,8 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
         this.audioProgress = this.audioProgress.bind(this);
         this.toggleContactWindow = this.toggleContactWindow.bind(this);
         this.audioError = this.audioError.bind(this);
+
+        (window as any).render = () =>{ return this.render()};
     }
 
     async loadData() {
@@ -143,6 +145,7 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
     }
 
     render() {
+        console.log('rendert')
         let loadedPercent = 0;
         let playbackPercent = 0;
         let duration = 0;
