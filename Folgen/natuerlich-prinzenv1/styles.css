@@ -459,6 +459,31 @@ button.controls__more {
     margin: 10px;
 }
 
+
+.chat-bubble__bubble-poll{
+
+    font-size: 16px;
+    background-color: #5ebfba;
+    /*text-align: center;*/
+}
+.chat-bubble__poll-user-choice-padding {
+    padding: 10px 15px;
+    background-color: #5ebfba;
+}
+
+.chat-bubble__poll-container{
+    text-align: right;
+    width: 100%;
+}
+
+.chat-bubble__bubble-poll-buttons{
+    font-size: 20px;
+}
+
+.chat-bubble__bubble-poll-buttons-container{
+    text-align: center;
+}
+
 .chat-bubble__bubble-link-title {
     font-size: 13px;
     font-weight: bold;
@@ -1434,7 +1459,6 @@ a.pswp__share--download:hover {
 .side-menu__contact-us a {
     color: #848484;
 }
-
 .poll-user-choice__bubble-poll-buttons {
     background-color: #cddce9;
     color: #0C174E;
@@ -1466,12 +1490,30 @@ a.pswp__share--download:hover {
     background-color: #5ebfba;
 }
 
-.poll-user-textinput__bubble-poll-buttons{
+.poll-user-textinput__user-input-area {
+    resize: none;
+    outline: none;
+    font-size: 16px;
+    font-family: sans-serif ;
+    border: none;
+    width: 100%;
+    rows: 4;
+    cols: 50;
+}
+
+.poll-user-textinput__bubble-poll-buttons {
     font-size: 20px;
 }
 
-.poll-user-textinput__bubble-poll-buttons-container{
+.poll-user-textinput__bubble-poll-buttons-container {
     text-align: center;
+    width: 100%;
+}
+
+.poll-user-textinput__user-choice-container{
+
+    text-align: center;
+    padding: 10px 15px;
 }
 
 .start-button__start-button-container {

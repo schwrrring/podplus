@@ -68,7 +68,7 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
                     <div>{this.props.question}</div>
                     <div className={styles.bubblePollButtonsContainer}>
 
-                    <textarea onChange={this.showInputSendButtons} className={styles.userInputArea} placeholder={"Nachricht schreiben..."} autoFocus={true}></textarea>
+                    <textarea onChange={this.showInputSendButtons} className={styles.userInputArea} placeholder={"Nachricht schreiben..."} autoFocus={false}></textarea>
                         {this.state.showInputButtons &&
                         <div>
                             <button onClick={() => {
