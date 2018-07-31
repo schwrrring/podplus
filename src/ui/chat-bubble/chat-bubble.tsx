@@ -309,7 +309,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
         }
 
         if (this.props.poll) {
-            className += " " + styles.pollContainer;
+            containerClassName += " " + styles.pollContainer;
         }
 
         return (

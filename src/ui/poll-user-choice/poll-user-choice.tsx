@@ -59,9 +59,10 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 
         let retVal;
         if (!this.state.pollSent) {
-            retVal = (<div>
+            retVal = (
 
-                <div className={styles.bubblePollButtonsContainer}>
+
+                <div key="poll-choice" className={styles.bubblePollButtonsContainer}>
                     <div>{this.props.question}</div>
 
                     <button className={styles.bubblePollButtons} onClick={() => {
@@ -96,7 +97,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 
                 </div>
 
-            </div>)
+            )
         } else {
 
             let followUptext: React.CSSProperties = {
