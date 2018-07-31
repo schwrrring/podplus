@@ -54,6 +54,7 @@ export interface ChatBubblePollInt {
     choices: string[];
     followUp: string;
     pollID: string;
+    showResults: boolean;
 }
 
 export interface ChatBubbleProperties {
@@ -183,7 +184,7 @@ function renderPoll(bindTo: ChatBubble) {
             choices={bindTo.props.poll.choices}
             followUp={bindTo.props.poll.followUp}
             pollID={bindTo.props.poll.pollID}
-
+            showResults={bindTo.props.poll.showResults}
         />)
     }
     else {

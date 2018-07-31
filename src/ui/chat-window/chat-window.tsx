@@ -1,7 +1,7 @@
 import data from "../dummy-data.js";
 import * as React from "react";
 import * as styles from "./chat-window.css";
-import { PerformanceScrollView, AddNewItemsTo } from "performance-scroll-view";
+import { PerformanceScrollView, AddNewItemsTo } from "../performance-scroll-view/performance-scroll-view";
 import { ChatBubble, ChatBubbleProperties } from "../chat-bubble/chat-bubble";
 import { Script } from "../../interfaces/script";
 import { activeDing } from "../ding/ding";

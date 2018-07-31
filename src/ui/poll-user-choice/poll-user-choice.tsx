@@ -10,6 +10,7 @@ interface ChatBubblePollProperties {
     choices: string[];
     followUp?: string;
     pollID: string;
+    showResults: boolean;
 
 }
 
@@ -60,8 +61,6 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         let retVal;
         if (!this.state.pollSent) {
             retVal = (
-
-
                 <div key="poll-choice" className={styles.bubblePollButtonsContainer}>
                     <div>{this.props.question}</div>
 
@@ -108,13 +107,18 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
             retVal = (
                 <div key="text" className={styles.bubbleTextPadding}>
                     <div className={styles.bubbleText}>
-                        <div style={followUptext}>{this.props.followUp}</div>
+                        <div>{this.props.followUp}</div>
+                        {this.props.showResults == true &&
                         <div>
-                            {this.props.choices[0]}: {calculatePercentage(this.state.value[0], this.state.value[1])} %
+                            <div>
+                                {this.props.choices[0]}: {calculatePercentage(this.state.value[0], this.state.value[1])} %
+                            </div>
+                            <div>
+                                {this.props.choices[1]}: {calculatePercentage(this.state.value[1], this.state.value[0])} %
+                            </div>
                         </div>
-                        <div>
-                            {this.props.choices[1]}: {calculatePercentage(this.state.value[1], this.state.value[0])} %
-                        </div>
+                        }
+
                     </div>
                 </div>
 
@@ -128,7 +132,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 function calculatePercentage(a: number, b: number) {
     let aInpercent: number;
 
-    aInpercent =  Math.floor((a / (a + b) * 100));
+    aInpercent = Math.floor((a / (a + b) * 100));
 
     return aInpercent
 }
