@@ -311,6 +311,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
 
         if (this.props.poll) {
             containerClassName += " " + styles.pollContainer;
+            className += " " + styles.bubbleFullWidth;
         }
 
         return (

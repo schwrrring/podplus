@@ -145,7 +145,7 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
     }
 
     render() {
-        console.log('rendert')
+
         let loadedPercent = 0;
         let playbackPercent = 0;
         let duration = 0;

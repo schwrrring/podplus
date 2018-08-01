@@ -78,6 +78,9 @@ export class PerformanceScrollView extends Component<PerformanceScrollViewProper
         this.updateAnimation = this.updateAnimation.bind(this);
         this.onIdle = this.onIdle.bind(this);
         this.scrollToEnd = this.scrollToEnd.bind(this);
+        this.recalculatePositions = this.recalculatePositions.bind(this);
+        (window as any).recalc = this.recalculatePositions
+
 
         let bufferOffset = 0;
         if (props.startIndex) {
