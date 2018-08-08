@@ -11,6 +11,7 @@ interface ChatBubblePollProperties {
     followUp?: string;
     pollID: string;
     showResults: boolean;
+    onResize: any;
 
 }
 
@@ -65,6 +66,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                     <div>{this.props.question}</div>
 
                     <button className={styles.bubblePollButtons} onClick={() => {
+
                         incrementCounter(db, this.state.databaseRefs[0], 10);
                         let iterable = this.state.databaseRefs.map((val) => getCount(val));
                         let results = Promise.all(iterable)
@@ -74,7 +76,9 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                                     value: valutys
                                 })
                                 console.log(valutys, 'na, klappts')
+                                this.props.onResize();
                             })
+                        this.props.onResize();
                     }}>
                         {this.props.choices[0]}
                     </button>
@@ -114,6 +118,10 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                                 {this.props.choices[0]}: {calculatePercentage(this.state.value[0], this.state.value[1])} %
                             </div>
                             <div>
+                                <h1>sdflkj</h1>
+                                <h1>sdflkj</h1>
+                                <h1>sdflkj</h1>
+                                <h1>sdflkj</h1>
                                 {this.props.choices[1]}: {calculatePercentage(this.state.value[1], this.state.value[0])} %
                             </div>
                         </div>

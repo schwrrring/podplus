@@ -1,4 +1,4 @@
-import { Component } from "react";
+import {Component} from "react";
 import * as React from "react";
 
 const scrollViewItemCSS: React.CSSProperties = {
@@ -19,6 +19,21 @@ export interface ScrollViewItemProperties {
 export class ScrollViewItem extends Component<ScrollViewItemProperties, any> {
     wrapperElement: HTMLDivElement;
 
+    constructor(props) {
+        super(props);
+
+        this.onResize = this.onResize.bind(this);
+        (window as any).rrr = () => {
+            this.componentDidMount = this.componentDidMount.bind(this)
+            return this.componentDidMount!
+        };
+    }
+
+    onResize (){
+        let size = this.wrapperElement.getBoundingClientRect();
+        this.props.onRender(this.props.itemIndex, Math.ceil(size.width), Math.ceil(size.height));
+    }
+
     render() {
         let style = scrollViewItemCSS;
 
@@ -28,9 +43,14 @@ export class ScrollViewItem extends Component<ScrollViewItemProperties, any> {
             });
         }
 
+        const childWithProp = React.Children.map(this.props.children, (child) => {
+            return React.cloneElement(child, {onResize: this.onResize});
+        });
+        console.log(childWithProp, "childWithProp")
+
         return (
             <div id={this.props.debugId} ref={el => (this.wrapperElement = el!)} style={style}>
-                {this.props.children}
+                {childWithProp}
             </div>
         );
     }

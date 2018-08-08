@@ -143,6 +143,8 @@ export class PerformanceScrollView extends Component<PerformanceScrollViewProper
                 }
             }
 
+            // Todo hier ne funktionalitaet hinzufuegen
+
             let numberOfNewItems = 0;
 
             if (this.isAtScrollEnd() === false) {
@@ -166,6 +168,7 @@ export class PerformanceScrollView extends Component<PerformanceScrollViewProper
                 itemPositions: this.state.itemPositions
             });
         }
+
     }
 
     renderChildItems() {
@@ -187,6 +190,7 @@ export class PerformanceScrollView extends Component<PerformanceScrollViewProper
         }
 
         return this.state.itemBuffer.map((child, idx) => {
+            console.log(child, "child")
             let indexInFullItemList = this.state.currentBufferOffset + idx;
 
             let heightAndPosition = this.state.itemPositions.get(indexInFullItemList);
@@ -450,6 +454,11 @@ export class PerformanceScrollView extends Component<PerformanceScrollViewProper
             };
         });
     }
+
+
+    //TODO: completely understand:
+    //
+
 
     calculatePendingRenders() {
         console.info("VIEW: Calculating item positions with", this.state.pendingItemRenders.size, "pending renders");

@@ -31,6 +31,7 @@ export interface ChatBubblePollProperties {
     choices: string[];
     followUp?: string;
     pollID: string;
+    onResize: any;
 }
 
 
@@ -66,6 +67,7 @@ export interface ChatBubbleProperties {
     silent?: boolean;
     notificationOnlyText?: string;
     poll?: ChatBubblePollInt;
+    onResize?: any;
 }
 
 interface ChatBubbleState {
@@ -185,6 +187,7 @@ function renderPoll(bindTo: ChatBubble) {
             followUp={bindTo.props.poll.followUp}
             pollID={bindTo.props.poll.pollID}
             showResults={bindTo.props.poll.showResults}
+            onResize = { bindTo.props.onResize}
         />)
     }
     else {
@@ -194,6 +197,7 @@ function renderPoll(bindTo: ChatBubble) {
             choices={bindTo.props.poll.choices}
             followUp={bindTo.props.poll.followUp}
             pollID={bindTo.props.poll.pollID}
+            onResize = {bindTo.props.onResize}
 
         />)
     }
