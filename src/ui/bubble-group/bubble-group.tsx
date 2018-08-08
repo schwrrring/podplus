@@ -4,6 +4,7 @@ import { makeRelative } from "../../interfaces/script";
 import { sendNotification, removeNotification } from "../../util/notification-dispatch";
 import { activeDing } from "../ding/ding";
 import { sendEvent } from "../../util/analytics";
+import {ReactElement} from "react";
 
 const ALWAYS_SHOW_NOTIFICATIONS =
     process.env.NODE_ENV === "development" && window.location.href.indexOf("alwaysShow=1") > -1;
@@ -11,7 +12,7 @@ const ALWAYS_SHOW_NOTIFICATIONS =
 interface BubbleGroupProperties {
     notification?: ShowNotification;
     silent: boolean;
-    onResize: any;
+    onResize?: () => void;
 }
 
 interface BubbleGroupState {
@@ -38,7 +39,7 @@ export class BubbleGroup extends React.Component<BubbleGroupProperties, BubbleGr
     render() {
 
         const childWithProp = React.Children.map(this.props.children, (child) => {
-            return React.cloneElement(child, {onResize: this.props.onResize});
+            return React.cloneElement( child as ReactElement<any>, {onResize: this.props.onResize});
         });
 
         return childWithProp;

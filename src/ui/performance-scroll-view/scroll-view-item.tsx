@@ -44,9 +44,8 @@ export class ScrollViewItem extends Component<ScrollViewItemProperties, any> {
         }
 
         const childWithProp = React.Children.map(this.props.children, (child) => {
-            return React.cloneElement(child, {onResize: this.onResize});
+            return React.cloneElement(child as React.ReactElement<any>, {onResize: this.onResize});
         });
-        console.log(childWithProp, "childWithProp")
 
         return (
             <div id={this.props.debugId} ref={el => (this.wrapperElement = el!)} style={style}>

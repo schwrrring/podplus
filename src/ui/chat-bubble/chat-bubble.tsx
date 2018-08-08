@@ -67,7 +67,7 @@ export interface ChatBubbleProperties {
     silent?: boolean;
     notificationOnlyText?: string;
     poll?: ChatBubblePollInt;
-    onResize?: any;
+    onResize?: ()=> void;
 }
 
 interface ChatBubbleState {
@@ -187,7 +187,7 @@ function renderPoll(bindTo: ChatBubble) {
             followUp={bindTo.props.poll.followUp}
             pollID={bindTo.props.poll.pollID}
             showResults={bindTo.props.poll.showResults}
-            onResize = { bindTo.props.onResize}
+            onResize = { bindTo.props.onResize!}
         />)
     }
     else {

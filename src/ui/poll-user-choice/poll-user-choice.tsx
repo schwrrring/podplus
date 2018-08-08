@@ -11,7 +11,7 @@ interface ChatBubblePollProperties {
     followUp?: string;
     pollID: string;
     showResults: boolean;
-    onResize: any;
+    onResize: ()=> void;
 
 }
 
@@ -39,7 +39,6 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
             let ref = db.collection(this.props.pollID).doc(this.props.choices[i]);
             const ergebnis = ref.get()
             ergebnis.then(function (value) {
-                console.log(value, "existiert Ckers?");
                 if (!value.exists) {
                     createCounter(ref, 10)
                 }
@@ -75,7 +74,6 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                                     pollSent: true,
                                     value: valutys
                                 })
-                                console.log(valutys, 'na, klappts')
                                 this.props.onResize();
                             })
                         this.props.onResize();
@@ -92,7 +90,6 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                                     pollSent: true,
                                     value: valutys
                                 })
-                                console.log(valutys, 'na, klappts')
                             })
                     }}>
                         {this.props.choices[1]}
