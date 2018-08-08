@@ -79,8 +79,6 @@ export class PerformanceScrollView extends Component<PerformanceScrollViewProper
         this.onIdle = this.onIdle.bind(this);
         this.scrollToEnd = this.scrollToEnd.bind(this);
         this.recalculatePositions = this.recalculatePositions.bind(this);
-        (window as any).recalc = this.recalculatePositions
-
 
         let bufferOffset = 0;
         if (props.startIndex) {
@@ -190,7 +188,6 @@ export class PerformanceScrollView extends Component<PerformanceScrollViewProper
         }
 
         return this.state.itemBuffer.map((child, idx) => {
-            console.log(child, "child")
             let indexInFullItemList = this.state.currentBufferOffset + idx;
 
             let heightAndPosition = this.state.itemPositions.get(indexInFullItemList);

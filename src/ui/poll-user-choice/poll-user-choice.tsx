@@ -91,6 +91,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                                     value: valutys
                                 })
                             })
+                        this.props.onResize();
                     }}>
                         {this.props.choices[1]}
                     </button>
@@ -115,10 +116,6 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                                 {this.props.choices[0]}: {calculatePercentage(this.state.value[0], this.state.value[1])} %
                             </div>
                             <div>
-                                <h1>sdflkj</h1>
-                                <h1>sdflkj</h1>
-                                <h1>sdflkj</h1>
-                                <h1>sdflkj</h1>
                                 {this.props.choices[1]}: {calculatePercentage(this.state.value[1], this.state.value[0])} %
                             </div>
                         </div>

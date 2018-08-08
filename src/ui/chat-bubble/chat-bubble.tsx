@@ -31,7 +31,7 @@ export interface ChatBubblePollProperties {
     choices: string[];
     followUp?: string;
     pollID: string;
-    onResize: any;
+    onResize?: ()=> void;
 }
 
 
@@ -188,6 +188,7 @@ function renderPoll(bindTo: ChatBubble) {
             pollID={bindTo.props.poll.pollID}
             showResults={bindTo.props.poll.showResults}
             onResize = { bindTo.props.onResize!}
+            key = {"poll"}
         />)
     }
     else {
@@ -198,7 +199,7 @@ function renderPoll(bindTo: ChatBubble) {
             followUp={bindTo.props.poll.followUp}
             pollID={bindTo.props.poll.pollID}
             onResize = {bindTo.props.onResize}
-
+            key = {"poll"}
         />)
     }
 }
