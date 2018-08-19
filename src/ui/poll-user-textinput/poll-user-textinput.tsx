@@ -6,6 +6,8 @@ import {createCounter, db, getCount, incrementCounter} from "../../bridge/databa
 
 
 export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatBubblePollState> {
+    textAreaElement: HTMLTextAreaElement | null;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +18,7 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
         }
         this.setUpDatabase = this.setUpDatabase.bind(this);
         this.showInputSendButtons = this.showInputSendButtons.bind(this);
+        this.autoGrow = this.autoGrow.bind(this)
     }
 
     setUpDatabase() {
@@ -50,11 +53,18 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
         let value = event.target.value;
         if(value.length!=0){
             this.setState({showInputButtons: true})
+            this.props.onResize!();
         } else{
             this.setState({showInputButtons: false})
         }
 
 
+    }
+
+    autoGrow(element) {
+        element.style.height = "auto";
+        element.style.height = (element.scrollHeight)+"px";
+        this.props.onResize!();
     }
 
     render() {
@@ -68,7 +78,13 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
                     <div>{this.props.question}</div>
                     <div className={styles.bubblePollButtonsContainer}>
 
-                    <textarea onChange={this.showInputSendButtons} className={styles.userInputArea} placeholder={"Nachricht schreiben..."} autoFocus={false}></textarea>
+                    <textarea ref={el => (this.textAreaElement = el)}
+                              onChange={this.showInputSendButtons}
+                              className={styles.userInputArea}
+                              placeholder={"Nachricht schreiben..."}
+                              autoFocus={false}
+                              onKeyDown={()=>this.autoGrow(this.textAreaElement)}
+                    />
                         {this.state.showInputButtons &&
                         <div>
                             <button onClick={() => {
