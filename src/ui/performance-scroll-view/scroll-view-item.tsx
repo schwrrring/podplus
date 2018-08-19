@@ -23,10 +23,6 @@ export class ScrollViewItem extends Component<ScrollViewItemProperties, any> {
         super(props);
 
         this.onResize = this.onResize.bind(this);
-        (window as any).rrr = () => {
-            this.componentDidMount = this.componentDidMount.bind(this)
-            return this.componentDidMount!
-        };
     }
 
     onResize (){
